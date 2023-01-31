@@ -27,15 +27,19 @@ class Processor:
         self.current_process = None
 
     def dispatcher(self, queue='Low'):
-        if queue == 'Low':
-            p = self.FCFS.pop(0)
-        elif queue == 'Normal':
-            p = self.RR2.pop(0)
-        else:
+        p = None
+        if queue == 'High' and len(self.RR1)>0:
             p = self.RR1.pop(0)
+        elif queue == 'Normal' and len(self.RR2)>0:
+            p = self.RR2.pop(0)
+        elif len(self.FCFS)>0:
+            p = self.FCFS.pop(0)
+        elif len(self.init_queue)==0:
+            self.is_empty = True
         
-        self.current_process = p
-        self.is_busy = True
+        if p:
+            self.current_process = p
+            self.is_busy = True
 
     def job_creator():
         pass

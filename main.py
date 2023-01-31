@@ -2,14 +2,14 @@ from numpy import random
 import math
 from core import Process, Processor
 
-x = input('X: ')
-y = input('Y: ')
-z = input('Z: ')
-sim_time = input('Time: ')
-process_count = input('Desired process count: ')
-k = input('Provide Process count minimum: ')
-t1 = input('T1: ')
-t2 = input('T2: ')
+x = int(input('X: '))
+y = int(input('Y: '))
+z = int(input('Z: '))
+sim_time = int(input('Time: '))
+process_count = int(input('Desired process count: '))
+k = int(input('Provide Process count minimum: '))
+t1 = int(input('T1: '))
+t2 = int(input('T2: '))
 timer = 0
 
 aux_list = []
@@ -109,4 +109,6 @@ while (not processor.is_empty) and (processor.clock<sim_time):
             arg = 'Normal'
 
         processor.dispatcher(arg)
+
+    processor.clock +=1
     
