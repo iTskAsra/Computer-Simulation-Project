@@ -42,9 +42,11 @@ class Processor:
 
     def job_loader(self, k):
         counter=0
-        for p in self.init_queue:
+        for i in range(len(self.init_queue)):
+            p = self.init_queue[i]
             if p.arrival <= self.clock:
                 self.RR1.append(p)
+                self.init_queue.pop(i)
                 counter += 1
             if counter == k:
                 break

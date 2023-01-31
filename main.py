@@ -56,3 +56,57 @@ while (not processor.is_empty) and (processor.clock<sim_time):
     if len(processor.FCFS)+len(processor.RR1)+len(processor.RR2):
         processor.job_loader()
     
+    if processor.is_busy:
+        processor.current_process.processed += 1
+
+        if processor.current_process.previous_queue == 'High':
+            if processor.current_process.processed>=processor.t1:
+                processor.is_busy = False
+                processor.RR2.append(processor.current_process)
+                processor.current_process=None
+
+        if processor.current_process.previous_queue == 'Normal':
+            if processor.current_process.processed>=processor.t2:
+                processor.is_busy = False
+                processor.FCFS.append(processor.current_process)
+                processor.current_process=None
+
+
+        if processor.current_process.processed == processor.current_process.service_time:
+            processor.is_busy = False
+            processor.current_process = None
+
+        for p in processor.FCFS:
+            p.time_in_queue +=1
+
+        for p in processor.RR1:
+            p.time_in_queue +=1
+        
+        for p in processor.RR2:
+            p.time_in_queue +=1
+
+        for i in range(len(processor.FCFS)):
+            if processor.FCFS[i].time_in_queue >= processor.FCFS[i].timeout:
+                processor.processes_dropped += 1
+                processor.FCFS.pop(i)
+
+        for i in range(len(processor.RR1)):
+            if processor.RR1[i].time_in_queue >= processor.RR1[i].timeout:
+                processor.processes_dropped += 1
+                processor.RR1.pop(i)
+        
+        for i in range(len(processor.RR2)):
+            if processor.RR2[i].time_in_queue >= processor.RR2[i].timeout:
+                processor.processes_dropped += 1
+                processor.RR2.pop(i)
+
+    if not processor.is_busy:
+        disp = random.uniform()
+        arg = 'Low'
+        if disp < 0.8:
+            arg = 'High'
+        elif disp < 0.9:
+            arg = 'Normal'
+
+        processor.dispatcher(arg)
+    
