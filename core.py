@@ -11,6 +11,9 @@ class Process:
         self.processed = processed
         self.previous_queue = 'High'
 
+    def __str__(self) -> str:
+        return f'Service time:{self.service_time}, Priority: {self.priority}, Arrival: {self.arrival}, Timeout: {self.timeout}'
+
 
 class Processor:
     def __init__(self, t1, t2) -> None:
@@ -20,11 +23,15 @@ class Processor:
         self.RR1 = []
         self.RR2 = []
         self.FCFS = []
+        self.rr1_accumulated = 0
+        self.rr2_accumulated = 0
+        self.fcfs_accumulated = 0
         self.t1 = t1
         self.t2 = t2
         self.processes_dropped = 0
         self.init_queue = []
         self.current_process = None
+        self.finished_or_dropped_processes = []
 
     def dispatcher(self, queue='Low'):
         p = None
@@ -46,7 +53,12 @@ class Processor:
 
     def job_loader(self, k):
         counter=0
-        for i in range(len(self.init_queue)):
+        length = len(self.init_queue)
+        i=0
+        while i<length:
+            length = len(self.init_queue)
+            if i==length:
+                break
             p = self.init_queue[i]
             if p.arrival <= self.clock:
                 self.RR1.append(p)
@@ -54,5 +66,7 @@ class Processor:
                 counter += 1
             if counter == k:
                 break
+
+            i+=1
         
 
