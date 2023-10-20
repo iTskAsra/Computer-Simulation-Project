@@ -6,9 +6,7 @@ This project, as part of Dr. Safai's Computer Simulation course at the Faculty o
 
 - [System Description](#system-description)
 - [Implementation Details](#implementation-details)
-- [Getting Started](#getting-started)
 - [Inputs and Outputs](#inputs-and-outputs)
-- [Contributors](#contributors)
 
 ## System Description
 
@@ -26,15 +24,3 @@ The simulation mimics a CPU scheduler where processes transition through queues 
 - **1T-Round-Robin**: Like FCFS but limits the processor execution time for each task to 1T time units.
 - **2T-Round-Robin**: Similar to 1T-Round-Robin but with a different execution time limit.
 
-## Getting Started
-
-### Dependencies
-
-- List the dependencies required for the project.
-
-### Running the Simulation
-
-1. Clone the repository.
-```bash
-git clone https://github.com/your-username/cpu-scheduler-simulation.git
-cd cpu-scheduler-simulation
